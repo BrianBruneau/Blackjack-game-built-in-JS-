@@ -1,5 +1,7 @@
 var DEAL_STATE = "DEAL";
 var PLAYER_STATE = "PLAYER_STATE";
+var COMPARE_STATE = "COMPARE_STATE";
+var DEALER_STATE = "DEALER_STATE";
 
 // the game starts in the deal state.
 var CURRENT_STATE = DEAL_STATE;
@@ -9,6 +11,9 @@ var playerCards = [];
 var dealerCards = [];
 var playerWins = 0;
 var dealerWins = 0;
+var playerMoney = 400;
+var dealerMoney = 3000;
+var playerBet = 0;
 
 
 function setGameState(gamestate) {
@@ -19,37 +24,70 @@ function setGameState(gamestate) {
 function executeState() {
     if (CURRENT_STATE === PLAYER_STATE) {
 
+    } else if (CURRENT_STATE === COMPARE_STATE) {
+        compareHands();
+    } else if (CURRENT_STATE === DEALER_STATE) {
+        dealerHit();
     }
 }
 
 var deal = function(cardNum) {
     var cardsArray = [];
     for (var i = 0; i < cardNum; i++) {
-        var randCard = getRandomInt(1, 52)
+        var randCard = getRandomInt(1, 52);
         cardsArray.push(checkValue(randCard));
     }
     return cardsArray;
+};
+
+var bet = function() {
+    playerBet += 30;
 }
+
+var dealerHit = function() {
+    console.log(dealerCards);
+    var total = checkTotal(dealerCards);
+        if(total <= 16) {
+            dealerCards = dealerCards.concat(deal(1));
+            setGameState(DEALER_STATE);
+        } else if(total > 21) {
+            console.log('Dealer BUSTS!');
+            dealerStay();
+        } else if(total === 21) {
+            console.log('21!');
+            dealerStay();
+        } else {
+            dealerStay();
+        }
+};
 
 
 var playerHit = function() {
     playerCards = playerCards.concat(deal(1));
     console.log(playerCards);
-    var total = checkTotal();
+    var total = checkTotal(playerCards);
     if (total === 21) {
         playerWins++;
-        console.log('21! Player wins!');
+        setGameState(COMPARE_STATE);
+        console.log('21!');
     } else if (total < 21) {
+        setGameState(PLAYER_STATE);
         console.log(total + ' Do you want to Hit, or Stay?');
     } else if (total > 21) {
         dealerWins++;
         console.log('BUST! Dealer wins this hand..');
+        setGameState(COMPARE_STATE);
     }
-    setGameState(PLAYER_STATE)
 
-}
+};
 
+var dealerStay = function() {
+    setGameState(COMPARE_STATE);
+};
 
+var playerStay = function() {
+    setGameState(DEALER_STATE);
+};
 
 
 function getRandomInt(min, max) {
@@ -60,17 +98,19 @@ var startGame = function() {
     playerCards = playerCards.concat(deal(2));
     dealerCards = dealerCards.concat(deal(2));
     console.log(playerCards, dealerCards);
-    var total = checkTotal();
-    if (total === 21) {
-        playerWins++;
-        console.log('21! Player wins!');
-    } else if (total < 21) {
-        console.log(total + ' Do you want to Hit, or Stay?');
-    } else if (total > 21) {
-        dealerWins++;
-        console.log('BUST! Dealer wins this hand..');
+    var playerTotal = checkTotal(playerCards);
+    var dealerTotal = checkTotal(dealerCards);
+    
+    if (playerTotal === 21) {
+        console.log('21!');
+        setGameState(COMPARE_STATE);
+    } else if (dealerTotal === 21) {
+        console.log('21!');
+        setGameState(COMPARE_STATE);
+    } else {
+        setGameState(PLAYER_STATE);
     }
-}
+};
 
 var checkValue = function(card) {
     var val; 
@@ -82,16 +122,29 @@ var checkValue = function(card) {
         val = card % 13;
     }
     return val;
-}
+};
 
-var checkTotal = function() {
+var checkTotal = function(cards) {
     var total = 0;
-    for(var i in playerCards) { 
-        total += playerCards[i]; 
-    };
+    for(var i in cards) { 
+        total += cards[i]; 
+    }
 
     console.log(total);
     return total;
-}
+};
+
+var compareHands = function() {
+    playerTotal = checkTotal(playerCards);
+    dealerTotal = checkTotal(dealerCards);
+    if (dealerTotal > 21 || playerTotal <= 21 && playerTotal > dealerTotal) {
+        console.log('Player wins!');
+        playerWins++;
+    } else if (playerTotal > 21 || dealerTotal <= 21 && dealerTotal > playerTotal) {
+        console.log('Dealer wins! Pay up...');
+        dealerWins++;
+    }
+    //enable New Game button
+};
 
 startGame();
