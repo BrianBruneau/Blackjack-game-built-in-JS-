@@ -44,6 +44,17 @@ var deal = function(cardNum) {
     var cardsArray = [];
     for (var i = 0; i < cardNum; i++) {
         var randCard = getRandomInt(1, 52);
+
+        if (randCard >= 1 && randCard <= 12) {
+            cardCreator("&clubs;", randCard, 'blackCard')
+        } else if (randCard >= 13 && randCard <= 24) {
+            cardCreator("&diams;", randCard, 'redCard')
+        } else if (randCard >= 25 && randCard <= 36) {
+            cardCreator("&hearts;", randCard, 'redCard')
+        } else if (randCard >= 37 && randCard <= 52) {
+            cardCreator("&spades;", randCard, 'blackCard')
+        }
+
         cardsArray.push(checkValue(randCard));
     }
     return cardsArray;
