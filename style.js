@@ -2,6 +2,7 @@ var DEAL_STATE = "DEAL";
 var PLAYER_STATE = "PLAYER_STATE";
 var COMPARE_STATE = "COMPARE_STATE";
 var DEALER_STATE = "DEALER_STATE";
+var BET_STATE = "BET_STATE";
 
 // the game starts in the deal state.
 var CURRENT_STATE = DEAL_STATE;
@@ -15,6 +16,10 @@ var playerMoney = 400;
 var dealerMoney = 3000;
 var playerBet = 0;
 
+var bet1 = 5;
+var bet2 = 10;
+var bet3 = 30;
+
 
 function setGameState(gamestate) {
     CURRENT_STATE = gamestate;
@@ -24,10 +29,14 @@ function setGameState(gamestate) {
 function executeState() {
     if (CURRENT_STATE === PLAYER_STATE) {
 
-    } else if (CURRENT_STATE === COMPARE_STATE) {
-        compareHands();
+    } else if (CURRENT_STATE === DEAL_STATE) {
+        startGame();
     } else if (CURRENT_STATE === DEALER_STATE) {
         dealerHit();
+    } else if (CURRENT_STATE === BET_STATE) {
+        //enable bet button
+    } else if (CURRENT_STATE === COMPARE_STATE) {
+        compareHands();
     }
 }
 
@@ -40,8 +49,21 @@ var deal = function(cardNum) {
     return cardsArray;
 };
 
-var bet = function() {
-    playerBet += 30;
+var bet = function(event) {
+    var name = event.target.name;
+    if(name === 'bet30') {
+        if (playerMoney >= 30) {
+            playerBet += 30;
+            playerMoney -= 30;
+            console.log(playerMoney);
+            setGameState(DEAL_STATE);
+        } else if (playerMoney < 30) {
+            console.log('Not enough money to bet!')
+            setGameState(DEAL_STATE);
+        }
+    } else if (name === 'bet10') {
+
+    }
 }
 
 var dealerHit = function() {
@@ -108,7 +130,7 @@ var startGame = function() {
         console.log('21!');
         setGameState(COMPARE_STATE);
     } else {
-        setGameState(PLAYER_STATE);
+        setGameState(BET_STATE);
     }
 };
 
@@ -126,7 +148,7 @@ var checkValue = function(card) {
 
 var checkTotal = function(cards) {
     var total = 0;
-    for(var i in cards) { 
+    for(var i in cards) {
         total += cards[i]; 
     }
 
@@ -146,5 +168,7 @@ var compareHands = function() {
     }
     //enable New Game button
 };
+
+$('#bet30').click(bet);
 
 startGame();
