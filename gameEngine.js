@@ -5,7 +5,6 @@ var DEALER_STATE = "DEALER_STATE";
 var BET_STATE = "BET_STATE";
 
 // the game starts in the deal state.
-var CURRENT_STATE = DEAL_STATE;
 
 // declare winner variables
 var playerWon = '***Player won!***'
@@ -67,6 +66,7 @@ function executeState() {
         dealerHit();
     } else if (CURRENT_STATE === BET_STATE) {
         updateStats();
+        createDeck();
         window.alert('Please place a bet.')
         $('.bet').prop("disabled", false);
         $('#hit').prop("disabled", true);
@@ -89,22 +89,21 @@ var createDeck = function() {
 var deal = function(cardNum) {
     var cardsArray = [];
     for (var i = 0; i < cardNum; i++) {
-        do { 
         // choose a random card
-        var randCard = getRandomInt(1, 52);
+        var randCard = getRandomCard(cardDeck);
         
         // check to see if the card is already dealt
-        var index = cardsArray.indexOf(randCard);
-        var isUnique = index == -1;
+        // var index = cardsArray.indexOf(randCard);
+        // var isUnique = index == -1;
 
-        console.log("rand:", randCard, "indexOf:", index);
-        if (isUnique) {
-            console.log("yes added");
-            cardsArray.push(randCard);
-        } else {
-            console.log("not added");
-        }
-    } while (!isUnique)
+        // console.log("rand:", randCard, "indexOf:", index);
+        // if (isUnique) {
+        //     console.log("yes added");
+        cardsArray.push(randCard);
+        cardDeck.splice(cardDeck.indexOf(randCard), 1);
+        // } else {
+        //     console.log("not added");
+        // }
   } 
 
     return cardsArray;
@@ -191,8 +190,8 @@ var playerStay = function() {
     setGameState(DEALER_STATE);
 };
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomCard(cardDeck) {
+    return Math.floor(Math.random() * cardDeck.length);
 }
 
 var startGame = function() {
@@ -319,6 +318,7 @@ $('#stay').click(function(event){
 $('#new_game').click(function(event){
     playerCards = [];
     dealerCards = [];
+    cardDeck = [];
     $('#playerTarget').html("");
     $('#dealerTarget').html("");
     $('#winner_spot').html("");
