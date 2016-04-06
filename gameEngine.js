@@ -16,7 +16,7 @@ var tie = '***TIE! No one wins. Pay up...***'
 var twentyOne = '~~ 21 !! ~~'
 var busted = '!__BUST__!'
 
-
+var cardDeck = [];
 var playerCards = [];
 var dealerCards = [];
 var playerWins = 0;
@@ -55,24 +55,34 @@ function executeState() {
 
     } else if (CURRENT_STATE === DEAL_STATE) {
         updateStats();
+        $('.bet').prop("disabled", true);
         $('#hit').prop("disabled", false);
         $('#stay').prop("disabled", false);
         startGame();
     } else if (CURRENT_STATE === DEALER_STATE) {
         updateStats();
+        $('.bet').prop("disabled", true);
         $('#hit').prop("disabled", true);
         $('#stay').prop("disabled", true);
         dealerHit();
     } else if (CURRENT_STATE === BET_STATE) {
         updateStats();
         window.alert('Please place a bet.')
+        $('.bet').prop("disabled", false);
         $('#hit').prop("disabled", true);
         $('#stay').prop("disabled", true);
     } else if (CURRENT_STATE === COMPARE_STATE) {
         updateStats();
+        $('.bet').prop("disabled", true);
         $('#hit').prop("disabled", true);
         $('#stay').prop("disabled", true);
         compareHands();
+    }
+}
+
+var createDeck = function() {
+    for (var i = 1; i <= 52; i++) {
+        cardDeck.push(i);
     }
 }
 
