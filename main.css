@@ -3,11 +3,75 @@ img {
 }
 
 body { 
+  width: 100%;
   background: #339900; 
 }
 
 span { 
   display: block; 
+}
+
+#bust_21 {
+  font-size: 30px;
+  font-style: bold;
+  background-size: 16px;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-color: #cc0033;
+  background-image: -webkit-linear-gradient(45deg, rgba(0, 0, 0, .3) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .3) 50%, rgba(0, 0, 0, .3) 75%, transparent 75%, transparent);
+}
+
+#winner_spot {
+  font-size: 30px;
+  font-style: bold;
+  color: gold;
+}
+
+#hit {
+  background-color: red;
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+  color: black;
+}
+
+#stay {
+  background-color: lightblue;
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+  color: black;
+}
+
+.bet {
+  background-color: purple;
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+  color: black;
+}
+
+.margin_top {
+  margin-top: 30px;
+}
+
+.m_value {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+#game_title {
+  text-align: center;
+}
+
+#dealerTarget {
+  display: block;
+}
+
+#playerTarget {
+  display: block;
+
+}
+
+.hand_header {
+  text-align: center;
 }
 
 .redCard {
@@ -23,7 +87,8 @@ span {
   text-align: center; 
   padding: 10px; 
   margin: 10px; 
-  background: #FFF;  
+  background: #FFF; 
+  display: inline-block; 
 }
 
 .top { 

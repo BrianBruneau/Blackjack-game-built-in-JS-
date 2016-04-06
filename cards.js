@@ -1,8 +1,17 @@
 var suit;
 var face;
 
-var cardCreator = function(suit, face, color) {
-    face = checkValue(face)
+var cardCreator = function(cardNumber, place) {
+    var suit = getSuit(cardNumber);
+    var color = getColor(suit);
+
+    var value = checkValue(cardNumber)
+
+    if (value === 10 || value === 11) {
+      face = highFaces(cardNumber);
+    } else {
+      face = value;
+    }
 
     var card = document.createElement("div");
       card.className = "outline shadow rounded " + color;
@@ -37,6 +46,25 @@ var cardCreator = function(suit, face, color) {
     card.appendChild(bigSuit);
     card.appendChild(cardBottom);
 
-    $("#target").append(card);
+    $(place).append(card);
   }
 
+var getSuit = function(cardNumber) {
+  if (cardNumber >= 1 && cardNumber <= 12) {
+    return "&clubs;";
+  } else if (cardNumber >= 13 && cardNumber <= 24) {
+    return "&diams;";
+  } else if (cardNumber >= 25 && cardNumber <= 36) {
+    return "&hearts;";
+  } else if (cardNumber >= 37 && cardNumber <= 52) {
+    return "&spades;";
+  }
+}
+
+var getColor = function(suit) {
+  if (suit === "&clubs;" || suit === "&spades;") {
+    return "blackCard";
+  } else {
+    return "redCard";
+  }
+}

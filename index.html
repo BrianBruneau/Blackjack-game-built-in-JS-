@@ -2,22 +2,58 @@
 <html>
 <head>
   <title></title>
- <link rel="stylesheet" href="main.css">
+<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="main.css">
 </head>
 <body>
-<div class="outline shadow rounded redCard">
-  <div class="top"><span>A</span><span>&hearts;</span></div>
-    <h1>&hearts;</h1>
-  <div class="bottom"><span>&hearts;</span><span>A</span></div>
-</div>
+  <div id="game_title" class="row">
+    <div class="col-xs- col-lg-12">
+    <h1>BlackJack</h1>
+    </div>
+  </div>
+  <div id="money_row" class="row">
+    <div class="col-xs- col-lg-offset-2 col-lg-3">
+      <div>Player Wins:<span id="playerW" class='m_value'></span></div>
+      <div>Dealer Wins:<span id="dealerW" class='m_value'></span></div>
+    </div>
+    <div class="col-xs- col-lg-3">
+      <div>Player Money:<span id="playerM" class='m_value'></span></div>
+      <div>Dealer Money:<span id="dealerM" class='m_value'></span></div>
+      <div>Player Bet:<span id="playerB" class='m_value'></span></div>
+    </div>
+    <div class="col-xs- col-lg-3">
+      <div id="bust_21"></div>
+      <div id="winner_spot"></div>
+      <button type="button" id="new_game" class="btn btn-secondary btn-lg btn-block">NEW GAME</button>
+    </div>
+  </div>
 
-<div class="outline shadow rounded blackCard">
-  <div class="top"><span>K</span><span>&spades;</span></div>
-  <h1>&spades;</h1>
-  <div class="bottom"><span>&spades;</span><span>A</span></div>
-</div>
+  <div id="card_row" class="row">
+    <div id="player_col" class="col-xs- col-lg-6">
+      <h3 class="hand_header">Players Hand</h3>
+      <div id="playerTarget" style=" border: solid black 1px;"></div>
+    </div>
+    <div id="dealer_col" class="col-xs- col-lg-6">
+      <h3 class="hand_header">Dealers Hand</h3>
+      <div id="dealerTarget" style=" border: solid black 1px;"></div>
+    </div>  
+  </div>
 
-<div id="target" style="border: solid black 1px;">cards:</div>
+  <div id="buttons_row" class="margin_top row">
+    <div class="col-xs- col-lg-offset-1 col-lg-2">
+      <button type="button" id="hit" class="btn btn-secondary btn-lg btn-block">HIT</button>
+    </div>
+    <div class="col-xs- col-lg-offset-2 col-lg-2">
+      <button type="button" id="stay" class="btn btn-secondary btn-lg btn-block">STAY</button>
+    </div>
+    <div class="col-xs- col-lg-offset-2 col-lg-2">
+      <button type="button" name="bet5" id="" class="bet btn btn-secondary btn-lg btn-block">BET = $5</button>
+      <button type="button" name="bet10" id="" class="bet btn btn-secondary btn-lg btn-block">BET = $10</button>
+      <button type="button" name="bet30" id="" class="bet btn btn-secondary btn-lg btn-block">BET = $30</button>
+    </div>
+    
+  </div>
 
 </body>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
