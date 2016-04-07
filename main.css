@@ -4,48 +4,117 @@ img {
 
 body { 
   width: 100%;
-  background: #339900; 
+  background-image: url("https://d2ffi3pa1qzwhf.cloudfront.net/casino/casino_generic_background4.jpg"); 
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 span { 
   display: block; 
 }
 
+#container {
+  margin-left: 30px;
+  margin-right: 30px;
+  border-style: double;
+  border-color: #CDAD00;
+  border-radius: 15px;
+  background-image: url("http://www.thenewburymediagroup.com/wp-content/uploads/2013/05/poker-table-felt.jpg");
+}
+
+#new_game {
+  background-color: #CD9B1D;
+  margin: 7px;
+  font-family: 'Lobster', cursive;
+  font-size: 25px;
+}
+
 #bust_21 {
-  font-size: 30px;
+  font-size: 40px;
+  font-family: 'Bangers', cursive;
   font-style: bold;
   background-size: 16px;
   -webkit-background-clip: text;
   color: transparent;
-  background-color: #cc0033;
-  background-image: -webkit-linear-gradient(45deg, rgba(0, 0, 0, .3) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .3) 50%, rgba(0, 0, 0, .3) 75%, transparent 75%, transparent);
+  background-color: #F0FFFF;
 }
 
 #winner_spot {
-  font-size: 30px;
+  font-family: 'Bangers', cursive;
+  font-size: 40px;
   font-style: bold;
-  color: gold;
+  color: #F0FFFF;
 }
 
 #hit {
-  background-color: red;
+  background-color: #B22222;
   font-family: 'Lobster', cursive;
-  font-size: 30px;
+  font-size: 60px;
   color: black;
 }
 
 #stay {
-  background-color: lightblue;
+  background-color: #B22222;
   font-family: 'Lobster', cursive;
-  font-size: 30px;
+  font-size: 60px;
   color: black;
 }
 
+#game_title {
+  border-radius: 25px;
+  width: 50%;
+  margin: 0 auto;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: black;
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
+  color: green;
+}
+
+#dealerTarget {
+  background-image: url("http://pre11.deviantart.net/154e/th/pre/f/2014/137/1/c/casino_card_background_wallpaper_hd_1920x1080_by_giozaga-d7intx0.jpg");
+  border-style: double;
+  border width: 1px;
+  border-color: yellow;
+  display: block;
+}
+
+#playerTarget {
+  background-image: url("http://pre11.deviantart.net/154e/th/pre/f/2014/137/1/c/casino_card_background_wallpaper_hd_1920x1080_by_giozaga-d7intx0.jpg");
+  border-style: double;
+  border width: 1px;
+  border-color: yellow;
+  display: block;
+
+}
+
+.thumbTail {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  background-color: black;
+  color: white;
+}
+
+.totalText {
+  margin-left: 38px;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+}
+
+.betBox {
+  border: gold solid 6px;
+  padding: 12px;
+}
+
 .bet {
-  background-color: purple;
+  background-color: #B22222;
   font-family: 'Lobster', cursive;
-  font-size: 30px;
+  font-size: 40px;
   color: black;
+  border-radius: 30px;
+  border-color:;
+  border-radius:;
 }
 
 .margin_top {
@@ -57,21 +126,19 @@ span {
   margin-left: 10px;
 }
 
-#game_title {
-  text-align: center;
-}
-
-#dealerTarget {
-  display: block;
-}
-
-#playerTarget {
-  display: block;
-
-}
-
 .hand_header {
+  border-radius: 25px;
+  width: 50%;
+  margin: 0 auto;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: black;
+  font-family: 'Orbitron', sans-serif;
   text-align: center;
+  text-decoration: underline;
+  color: green;
+  font-size: 35px;
+
 }
 
 .redCard {

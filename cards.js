@@ -68,3 +68,31 @@ var getColor = function(suit) {
     return "redCard";
   }
 }
+
+var highFaces = function(card) {
+    var face;
+    if (card === 1 || 
+        card === 14 || 
+        card === 27 ||
+        card === 40) {
+            face = "A";
+    } else if (card === 11 ||
+        card === 24 ||
+        card === 37 ||
+        card === 50) {
+            face = "J";
+    } else if (card === 12 ||
+        card === 25 ||
+        card === 38 ||
+        card === 51) {
+            face = "Q";
+    } else if (card === 13 ||
+        card === 26 ||
+        card === 39 ||
+        card === 52) {
+            face = "K";
+    } else {
+        face = 10;
+    }
+    return face;
+}

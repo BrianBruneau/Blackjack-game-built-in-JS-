@@ -1,15 +1,18 @@
+
 var DEAL_STATE = "DEAL";
 var PLAYER_STATE = "PLAYER_STATE";
 var COMPARE_STATE = "COMPARE_STATE";
 var DEALER_STATE = "DEALER_STATE";
 var BET_STATE = "BET_STATE";
+var REFRESH_STATE = "REFRESH_STATE";
 
-// the game starts in the deal state.
+
 
 // declare winner variables
 var playerWon = '***Player won!***'
 var dealerWon = '***Dealer wins! Pay up...***'
 var tie = '***TIE! No one wins. Pay up...***'
+var hitStay = '...Do you want to hit or stay?'
 
 // 21 or Bust variables
 var twentyOne = '~~ 21 !! ~~'
@@ -21,19 +24,21 @@ var dealerCards = [];
 var playerWins = 0;
 var dealerWins = 0;
 var playerMoney = 400;
-var dealerMoney = 3000;
+var dealerMoney = 0;
 var playerBet = 0;
 
-var bet1 = 5;
-var bet2 = 10;
-var bet3 = 'bet30';
+setGameState(REFRESH_STATE);
 
 var updateStats = function() {
     $('#playerW').html(playerWins);
     $('#dealerW').html(dealerWins);
-    $('#playerM').html(playerMoney);
-    $('#dealerM').html(dealerMoney);
-    $('#playerB').html(playerBet);
+    $('#playerM').html("$" + playerMoney);
+    $('#dealerM').html("$" + dealerMoney);
+    $('#playerB').html("$" + playerBet);
+}
+
+var dealerTotal = function(total) {
+
 }
 
 var declareWinner = function(winner) {
@@ -50,40 +55,62 @@ function setGameState(gamestate) {
 }
 
 function executeState() {
-    if (CURRENT_STATE === PLAYER_STATE) {
+    if (CURRENT_STATE === REFRESH_STATE) {
+        $('.bet').prop("disabled", true);
+        $('#hit').prop("disabled", true);
+        $('#stay').prop("disabled", true); 
 
     } else if (CURRENT_STATE === DEAL_STATE) {
         updateStats();
+        $("#better").removeClass("betBox");
         $('.bet').prop("disabled", true);
         $('#hit').prop("disabled", false);
         $('#stay').prop("disabled", false);
+        $('#new_game').prop("disabled", true);
         startGame();
     } else if (CURRENT_STATE === DEALER_STATE) {
         updateStats();
+        $("#better").removeClass("betBox");
         $('.bet').prop("disabled", true);
         $('#hit').prop("disabled", true);
         $('#stay').prop("disabled", true);
+        $('#new_game').prop("disabled", true);
         dealerHit();
     } else if (CURRENT_STATE === BET_STATE) {
         updateStats();
         createDeck();
-        window.alert('Please place a bet.')
+        $("#better").addClass("betBox");
         $('.bet').prop("disabled", false);
         $('#hit').prop("disabled", true);
         $('#stay').prop("disabled", true);
+        $('#new_game').prop("disabled", true);
     } else if (CURRENT_STATE === COMPARE_STATE) {
         updateStats();
+        $("#better").removeClass("betBox");
         $('.bet').prop("disabled", true);
         $('#hit').prop("disabled", true);
         $('#stay').prop("disabled", true);
+        $('#new_game').prop("disabled", false);
         compareHands();
+    } else if (CURRENT_STATE === PLAYER_STATE) {
+        $("#better").removeClass("betBox");
+        $('#new_game').prop("disabled", true);
     }
 }
 
-var createDeck = function() {
+  function createDeck() {
     for (var i = 1; i <= 52; i++) {
         cardDeck.push(i);
     }
+}
+
+var randomC = ''
+function getRandomCard(cardDeck) {
+    randomC = Math.floor(Math.random() * cardDeck.length);
+    card = cardDeck[randomC];
+    cardDeck.splice(randomC, 1);
+    return card;
+
 }
 
 var deal = function(cardNum) {
@@ -91,19 +118,7 @@ var deal = function(cardNum) {
     for (var i = 0; i < cardNum; i++) {
         // choose a random card
         var randCard = getRandomCard(cardDeck);
-        
-        // check to see if the card is already dealt
-        // var index = cardsArray.indexOf(randCard);
-        // var isUnique = index == -1;
-
-        // console.log("rand:", randCard, "indexOf:", index);
-        // if (isUnique) {
-        //     console.log("yes added");
         cardsArray.push(randCard);
-        cardDeck.splice(cardDeck.indexOf(randCard), 1);
-        // } else {
-        //     console.log("not added");
-        // }
   } 
 
     return cardsArray;
@@ -144,56 +159,6 @@ var bet = function(event) {
     }
 }
 
-var dealerHit = function() {
-    console.log(dealerCards);
-    var total = checkTotal(dealerCards);
-        if(total <= 16) {
-            dealerCards = dealerCards.concat(deal(1));
-            cardCreator(dealerCards[dealerCards.length - 1], "#dealerTarget");
-            setGameState(DEALER_STATE);
-        } else if(total > 21) {
-            bustOr21(busted);
-            dealerStay();
-        } else if(total === 21) {
-            bustOr21(twentyOne);
-            dealerStay();
-        } else {
-            dealerStay();
-        }
-};
-
-
-var playerHit = function() {
-    playerCards = playerCards.concat(deal(1));
-    cardCreator(playerCards[playerCards.length - 1], "#playerTarget");
-    var total = checkTotal(playerCards);
-    if (total === 21) {
-        playerWins++;
-        setGameState(COMPARE_STATE);
-        bustOr21(twentyOne);
-    } else if (total < 21) {
-        setGameState(PLAYER_STATE);
-        console.log(total + ' Do you want to Hit, or Stay?');
-    } else if (total > 21) {
-        dealerWins++;
-        bustOr21(busted);
-        setGameState(COMPARE_STATE);
-    }
-
-};
-
-var dealerStay = function() {
-    setGameState(COMPARE_STATE);
-};
-
-var playerStay = function() {
-    setGameState(DEALER_STATE);
-};
-
-function getRandomCard(cardDeck) {
-    return Math.floor(Math.random() * cardDeck.length);
-}
-
 var startGame = function() {
     updateStats();
     playerCards = playerCards.concat(deal(2));
@@ -210,43 +175,77 @@ var startGame = function() {
     var dealerTotal = checkTotal(dealerCards);
     
     if (playerTotal === 21) {
+        $('#hitOrStay').html(playerTotal + twentyOne);
         bustOr21(twentyOne);
         setGameState(COMPARE_STATE);
     } else if (dealerTotal === 21) {
+        $('#dealerTotal').html(dealerTotal + twentyOne);
         bustOr21(twentyOne);
         setGameState(COMPARE_STATE);
     } else {
+        $('#dealerTotal').html(dealerTotal);
+        $('#hitOrStay').html(playerTotal + hitStay);
         setGameState(PLAYER_STATE);
     }
 };
 
-var highFaces = function(card) {
-    var face;
-    if (card === 1 || 
-        card === 14 || 
-        card === 27 ||
-        card === 40) {
-            face = "A";
-    } else if (card === 11 ||
-        card === 24 ||
-        card === 37 ||
-        card === 50) {
-            face = "J";
-    } else if (card === 12 ||
-        card === 25 ||
-        card === 38 ||
-        card === 51) {
-            face = "Q";
-    } else if (card === 13 ||
-        card === 26 ||
-        card === 39 ||
-        card === 52) {
-            face = "K";
-    } else {
-        face = 10;
+var dealerHit = function() {
+    console.log(dealerCards);
+    var total = checkTotal(dealerCards);
+        if(total <= 16) {
+            $('#dealerTotal').html(total);
+            dealerCards = dealerCards.concat(deal(1));
+            cardCreator(dealerCards[dealerCards.length - 1], "#dealerTarget");
+            setGameState(DEALER_STATE);
+        } else if(total > 21) {
+            $('#dealerTotal').html(total + busted);
+            bustOr21(busted);
+            dealerStay();
+        } else if(total === 21) {
+            $('#dealerTotal').html(total + twentyOne);
+            bustOr21(twentyOne);
+            dealerStay();
+        } else {
+            $('#dealerTotal').html(total);
+            dealerStay();
+        }
+};
+
+
+var playerHit = function() {
+    playerCards = playerCards.concat(deal(1));
+    cardCreator(playerCards[playerCards.length - 1], "#playerTarget");
+    var Ptotal = checkTotal(playerCards);
+    var Dtotal = checkTotal(dealerCards);
+
+    if (Ptotal === 21) {
+        $('#hitOrStay').html(Ptotal + twentyOne);
+        $('#dealerTotal').html(Dtotal);
+        playerWins++;
+        setGameState(COMPARE_STATE);
+        bustOr21(twentyOne);
+    } else if (Ptotal < 21) {
+        $('#hitOrStay').html(Ptotal + hitStay);
+        $('#dealerTotal').html(Dtotal);
+        setGameState(PLAYER_STATE);
+    } else if (Ptotal > 21) {
+        $('#hitOrStay').html(Ptotal + busted);
+        $('#dealerTotal').html(Dtotal);
+        dealerWins++;
+        bustOr21(busted);
+        setGameState(COMPARE_STATE);
     }
-    return face;
-}
+
+};
+
+var dealerStay = function() {
+    setGameState(COMPARE_STATE);
+};
+
+var playerStay = function() {
+    setGameState(DEALER_STATE);
+};
+
 
 var checkValue = function(card) {
     var val; 
@@ -260,7 +259,7 @@ var checkValue = function(card) {
     return val;
 };
 
-var checkTotal = function(cards) {
+function checkTotal(cards) {
     var total = 0;
     for(var i in cards) {
     var value = checkValue(cards[i]);
@@ -282,6 +281,8 @@ var checkTotal = function(cards) {
 var compareHands = function() {
     playerTotal = checkTotal(playerCards);
     dealerTotal = checkTotal(dealerCards);
+    $('#hitOrStay').html(playerTotal);
+    $('#dealerTotal').html(dealerTotal);
     var playerReturn = (playerBet * 2)
     if (dealerTotal > 21 || playerTotal <= 21 && playerTotal > dealerTotal) {
         declareWinner(playerWon);
@@ -323,5 +324,7 @@ $('#new_game').click(function(event){
     $('#dealerTarget').html("");
     $('#winner_spot').html("");
     $('#bust_21').html("");
+    $('#hitOrStay').html("");
+    $('#dealerTotal').html("");
     setGameState(BET_STATE);
 });
