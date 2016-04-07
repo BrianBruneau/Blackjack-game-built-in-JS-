@@ -1,12 +1,10 @@
-
+//gamestate variables
 var DEAL_STATE = "DEAL";
 var PLAYER_STATE = "PLAYER_STATE";
 var COMPARE_STATE = "COMPARE_STATE";
 var DEALER_STATE = "DEALER_STATE";
 var BET_STATE = "BET_STATE";
 var REFRESH_STATE = "REFRESH_STATE";
-
-
 
 // declare winner variables
 var playerWon = '***Player won!***'
@@ -18,9 +16,12 @@ var hitStay = '...Do you want to hit or stay?'
 var twentyOne = '~~ 21 !! ~~'
 var busted = '!__BUST__!'
 
+// Deck/Hand variables
 var cardDeck = [];
 var playerCards = [];
 var dealerCards = [];
+
+// score table variables.
 var playerWins = 0;
 var dealerWins = 0;
 var playerMoney = 400;
@@ -29,6 +30,7 @@ var playerBet = 0;
 
 setGameState(REFRESH_STATE);
 
+// updates the score tables, whenever called.
 var updateStats = function() {
     $('#playerW').html(playerWins);
     $('#dealerW').html(dealerWins);
@@ -37,23 +39,21 @@ var updateStats = function() {
     $('#playerB').html("$" + playerBet);
 }
 
-var dealerTotal = function(total) {
-
-}
-
+// displays WINNER message in provided location.
 var declareWinner = function(winner) {
     $('#winner_spot').html(winner)
 }
-
+// displays BUST message in provided location.
 var bustOr21 = function(player) {
     $('#bust_21').html(player)
 }
-
+// funntion to set the game state, which then sends the state to the execute function.
 function setGameState(gamestate) {
     CURRENT_STATE = gamestate;
     executeState();
 }
 
+// executes which state the game is in. Determines the state, and runs whatever code that matches that state.
 function executeState() {
     if (CURRENT_STATE === REFRESH_STATE) {
         $('.bet').prop("disabled", true);
@@ -98,12 +98,14 @@ function executeState() {
     }
 }
 
-  function createDeck() {
+// creates a new deck for whenever necessary.
+function createDeck() {
     for (var i = 1; i <= 52; i++) {
         cardDeck.push(i);
     }
 }
 
+// pulls a random card from the cardDeck, pushes it, then deletes it from the deck.
 var randomC = ''
 function getRandomCard(cardDeck) {
     randomC = Math.floor(Math.random() * cardDeck.length);
@@ -113,6 +115,7 @@ function getRandomCard(cardDeck) {
 
 }
 
+// deals the amount of random cards specified, to the cards Array.
 var deal = function(cardNum) {
     var cardsArray = [];
     for (var i = 0; i < cardNum; i++) {
@@ -123,7 +126,8 @@ var deal = function(cardNum) {
 
     return cardsArray;
 };
-
+ 
+// determines which bet button is clicked, and the amount of the bet to place. 
 var bet = function(event) {
     var name = event.target.name;
     if(name === 'bet30') {
@@ -159,6 +163,7 @@ var bet = function(event) {
     }
 }
 
+// Starts game, deals cards, checks for 21.
 var startGame = function() {
     updateStats();
     playerCards = playerCards.concat(deal(2));
@@ -189,6 +194,7 @@ var startGame = function() {
     }
 };
 
+// Dealer function to "Hit"
 var dealerHit = function() {
     console.log(dealerCards);
     var total = checkTotal(dealerCards);
@@ -211,7 +217,7 @@ var dealerHit = function() {
         }
 };
 
-
+// Player function to "Hit"
 var playerHit = function() {
     playerCards = playerCards.concat(deal(1));
     cardCreator(playerCards[playerCards.length - 1], "#playerTarget");
@@ -238,15 +244,17 @@ var playerHit = function() {
 
 };
 
+// dealer stay function
 var dealerStay = function() {
     setGameState(COMPARE_STATE);
 };
 
+// player stay function
 var playerStay = function() {
     setGameState(DEALER_STATE);
 };
 
-
+// checks the card value(1-52), returns a value between (1-13) to be converted.
 var checkValue = function(card) {
     var val; 
     if(card % 13 === 0 || card % 13 >= 10) {
@@ -259,14 +267,15 @@ var checkValue = function(card) {
     return val;
 };
 
+// checks the total of the 2 or more cards in your hand.
 function checkTotal(cards) {
     var total = 0;
     for(var i in cards) {
-    var value = checkValue(cards[i]);
+        var value = checkValue(cards[i]);
         total += value; 
     }
     
-    // 
+    // Ace check 
     for(var i in cards) {
         var AceValue = checkValue(cards[i]);
         if (AceValue == 11 && total > 21) {
@@ -278,6 +287,7 @@ function checkTotal(cards) {
     return total;
 };
 
+// Compares the totals of the hands to determine winner.
 var compareHands = function() {
     playerTotal = checkTotal(playerCards);
     dealerTotal = checkTotal(dealerCards);
@@ -305,17 +315,20 @@ var compareHands = function() {
     //enable New Game button
 };
 
+// bet buttons function
 $('.bet').click(bet);
 
-
+// hit button function
 $('#hit').click(function(event){
     playerHit();
 });
 
+// stay button function
 $('#stay').click(function(event){
     playerStay();
 });
 
+// new game button functionality
 $('#new_game').click(function(event){
     playerCards = [];
     dealerCards = [];

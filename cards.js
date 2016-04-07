@@ -1,6 +1,6 @@
 var suit;
 var face;
-
+// Creates the peices of the card, and appends them together. Then sends the full card to the page.
 var cardCreator = function(cardNumber, place) {
     var suit = getSuit(cardNumber);
     var color = getColor(suit);
@@ -48,7 +48,7 @@ var cardCreator = function(cardNumber, place) {
 
     $(place).append(card);
   }
-
+// uses the previously converted variable to determine the suit.
 var getSuit = function(cardNumber) {
   if (cardNumber >= 1 && cardNumber <= 12) {
     return "&clubs;";
@@ -60,7 +60,7 @@ var getSuit = function(cardNumber) {
     return "&spades;";
   }
 }
-
+// uses the determined suit to assign color.
 var getColor = function(suit) {
   if (suit === "&clubs;" || suit === "&spades;") {
     return "blackCard";
@@ -68,7 +68,7 @@ var getColor = function(suit) {
     return "redCard";
   }
 }
-
+// determines which values are equal to face cards, and if not a face card, it returns the value as the face.
 var highFaces = function(card) {
     var face;
     if (card === 1 || 
