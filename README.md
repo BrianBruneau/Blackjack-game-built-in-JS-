@@ -29,3 +29,5 @@ For my project, I have chosen to create the game of Blackjack.
 8. To start a new round, click on New game. Repeat.
 
 ## Link to Game.
+
+ http://brianbruneau.github.io/Blackjack/
