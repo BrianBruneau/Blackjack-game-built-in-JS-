@@ -15,6 +15,7 @@ For my project, I have chosen to create the game of Blackjack.
 
 1. I would have added functionality for more than 1 player vs dealer.
 2. I would have added a double down function, possibly.
+3. Added a paypal function for users to gamble their lives away.
 
 
 ## Instructions..
