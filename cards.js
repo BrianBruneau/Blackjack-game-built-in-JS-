@@ -48,6 +48,7 @@ var cardCreator = function(cardNumber, place) {
 
     $(place).append(card);
   }
+
 // uses the previously converted variable to determine the suit.
 var getSuit = function(cardNumber) {
   if (cardNumber >= 1 && cardNumber <= 12) {

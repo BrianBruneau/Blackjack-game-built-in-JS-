@@ -172,7 +172,7 @@ var startGame = function() {
     cardCreator(playerCards[0], "#playerTarget");
     cardCreator(playerCards[1], "#playerTarget");
 
-    cardCreator(dealerCards[0], "#dealerTarget");
+    (cardCreator(dealerCards[0], "#dealerTarget");
     cardCreator(dealerCards[1], "#dealerTarget");
 
     console.log(playerCards, dealerCards);
