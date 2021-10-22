@@ -31,4 +31,4 @@ For my project, I have chosen to create the game of Blackjack.
 
 ## Link to Game.
 
- http://brianbruneau.github.io/Blackjack/
+https://brianbruneau.github.io/Blackjack-game-built-in-JS-/
