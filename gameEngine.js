@@ -7,14 +7,14 @@ var BET_STATE = "BET_STATE";
 var REFRESH_STATE = "REFRESH_STATE";
 
 // declare winner variables
-var playerWon = '***Player won!***'
-var dealerWon = '***Dealer wins! Pay up...***'
-var tie = '***TIE! No one wins. Pay up...***'
+var playerWon = 'Player wins!'
+var dealerWon = 'Dealer wins! Pay up...'
+var tie = 'TIE! No one wins. Pay up...'
 var hitStay = '...Do you want to hit or stay?'
 
 // 21 or Bust variables
-var twentyOne = '~~ 21 !! ~~'
-var busted = '!__BUST__!'
+var twentyOne = '21 !!'
+var busted = '!_BUST_!'
 
 // Deck/Hand variables
 var cardDeck = [];
