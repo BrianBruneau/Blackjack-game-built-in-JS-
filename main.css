@@ -4,7 +4,7 @@ img {
 
 body { 
   width: 100%;
-  background-image: url("https://d2ffi3pa1qzwhf.cloudfront.net/casino/casino_generic_background4.jpg"); 
+  background-image: url("./img/casino_tb.jpg"); 
   background-size: cover;
   background-repeat: no-repeat;
 }
